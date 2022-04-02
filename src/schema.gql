@@ -1,0 +1,101 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateTodoInput {
+  action: String!
+}
+
+input CreateUserInput {
+  """Email"""
+  email: String!
+
+  """First Name"""
+  firstName: String!
+
+  """Last Name"""
+  lastName: String
+
+  """Pass"""
+  password: String!
+
+  """User Name"""
+  userName: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input GetUserByEmailInput {
+  email: String!
+}
+
+input GetUserByUserNameInput {
+  userName: String!
+}
+
+input LoginInput {
+  password: String!
+  userName: String!
+}
+
+type LoginResponse {
+  accessToken: String!
+}
+
+type Mutation {
+  addTodo(createTodoInput: CreateTodoInput!): Todo!
+  removeTodos(ids: [String!]!): [Todo!]
+  signIn(user: LoginInput!): LoginResponse!
+  signUp(createUserInput: CreateUserInput!): UserEntity!
+  updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
+  updateUserDetails(updateUserInput: UpdateUserInput!): UserEntity!
+}
+
+type Query {
+  fetchTodos: [Todo!]!
+  getCurrentAuthenticatedUser: UserEntity!
+  getUserByEmail(user: GetUserByEmailInput!): UserEntity
+  getUserByUserName(user: GetUserByUserNameInput!): UserEntity
+}
+
+type Todo {
+  action: String!
+  id: String!
+}
+
+input UpdateTodoInput {
+  action: String!
+  todoId: String!
+}
+
+input UpdateUserInput {
+  """Email"""
+  email: String
+
+  """First Name"""
+  firstName: String
+
+  """Last Name"""
+  lastName: String
+
+  """Pass"""
+  password: String
+
+  """User Name"""
+  userName: String
+}
+
+type UserEntity {
+  email: String!
+  firstName: String!
+  id: String!
+  lastName: String
+  password: String!
+  registrationDate: DateTime!
+  registrationNumber: Float!
+  todos: [Todo!]!
+  userName: String!
+}
