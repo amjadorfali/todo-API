@@ -5,6 +5,7 @@ import { UserService } from 'src/user/user.service';
 import { LoginInputDTO } from './dtos';
 import { UserDocument } from 'src/user/user.schema';
 import { AuthenticatedUser, JwtPayload } from './auth.interfaces';
+import { compare } from 'src/hashing/hash';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,7 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException('userNotFound');
     }
-    if (pass !== user.password) {
+    if (!(await compare(pass, user.password))) {
       throw new BadRequestException('invalidPassword');
     }
 

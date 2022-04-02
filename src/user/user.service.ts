@@ -6,15 +6,19 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { UserType } from './dto/user';
 import { User, UserDocument } from './user.schema';
+import { hash } from 'src/hashing/hash';
 
 @Injectable()
 export class UserService {
   constructor(@InjectModel(User.name) private userModal: Model<UserDocument>) {}
 
-  async create(createTodoInput: CreateUserInput): Promise<UserDocument> {
+  async create(createUserInput: CreateUserInput): Promise<UserDocument> {
     const usersCount = await this.getUsersCount();
+    const hashedPassword = await hash(createUserInput.password);
+
     const createdUser = new this.userModal({
-      ...createTodoInput,
+      ...createUserInput,
+      password: hashedPassword,
       registration_number: usersCount + 1,
     });
     return await createdUser.save();
