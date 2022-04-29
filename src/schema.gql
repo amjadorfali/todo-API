@@ -53,8 +53,6 @@ type LoginResponse {
 
 type Mutation {
   addTodo(createTodoInput: CreateTodoInput!): Todo!
-  removeAllTodos: String
-  removeTodos(ids: [String!]!): String
   signIn(user: LoginInput!): LoginResponse!
   signUp(createUserInput: CreateUserInput!): UserEntity!
   updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
