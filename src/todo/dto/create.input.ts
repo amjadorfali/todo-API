@@ -4,4 +4,7 @@ import { InputType, Field } from '@nestjs/graphql';
 export class CreateTodoInput {
   @Field({ nullable: false })
   action!: string;
+
+  @Field({ nullable: true })
+  category?: string;
 }

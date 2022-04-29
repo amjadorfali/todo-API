@@ -1,12 +1,12 @@
-import { ExceptionFilter, Catch, ArgumentsHost, InternalServerErrorException } from '@nestjs/common';
-import { HttpAdapterHost } from '@nestjs/core';
-import { MongoServerError } from 'mongodb';
+import { ExceptionFilter, Catch, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
-  constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
-  catch(exception: MongoServerError, host: ArgumentsHost): void {
+  catch(exception: unknown): void {
     console.error(JSON.stringify(exception));
+    if (exception instanceof UnauthorizedException) {
+      throw new UnauthorizedException();
+    }
     throw new InternalServerErrorException();
   }
 }

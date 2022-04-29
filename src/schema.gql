@@ -4,6 +4,7 @@
 
 input CreateTodoInput {
   action: String!
+  category: String
 }
 
 input CreateUserInput {
@@ -28,6 +29,11 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input FindPaginatedTodosInput {
+  limit: Float = 20
+  page: Float = 0
+}
+
 input GetUserByEmailInput {
   email: String!
 }
@@ -47,7 +53,8 @@ type LoginResponse {
 
 type Mutation {
   addTodo(createTodoInput: CreateTodoInput!): Todo!
-  removeTodos(ids: [String!]!): [Todo!]
+  removeAllTodos: String
+  removeTodos(ids: [String!]!): String
   signIn(user: LoginInput!): LoginResponse!
   signUp(createUserInput: CreateUserInput!): UserEntity!
   updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
@@ -55,7 +62,7 @@ type Mutation {
 }
 
 type Query {
-  fetchTodos: [Todo!]!
+  fetchTodos(paginationInput: FindPaginatedTodosInput!): [Todo!]!
   getCurrentAuthenticatedUser: UserEntity!
   getUserByEmail(user: GetUserByEmailInput!): UserEntity
   getUserByUserName(user: GetUserByUserNameInput!): UserEntity
@@ -63,11 +70,15 @@ type Query {
 
 type Todo {
   action: String!
+  category: String!
   id: String!
+  isDone: Boolean!
 }
 
 input UpdateTodoInput {
-  action: String!
+  action: String
+  category: String
+  isDone: Boolean
   todoId: String!
 }
 
@@ -96,6 +107,6 @@ type UserEntity {
   password: String!
   registrationDate: DateTime!
   registrationNumber: Float!
-  todos: [Todo!]!
+  todos(paginationInput: FindPaginatedTodosInput!): [Todo!]!
   userName: String!
 }

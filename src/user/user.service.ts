@@ -7,21 +7,18 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { UserType } from './dto/user';
 import { User, UserDocument } from './user.schema';
 import { hash } from 'src/hashing/hash';
+import { toMongoRecord } from 'src/helpers/mongo';
 
 @Injectable()
 export class UserService {
   constructor(@InjectModel(User.name) private userModal: Model<UserDocument>) {}
 
   async create(createUserInput: CreateUserInput): Promise<UserDocument> {
-    const usersCount = await this.getUsersCount();
-    const hashedPassword = await hash(createUserInput.password);
-
-    const createdUser = new this.userModal({
+    return await new this.userModal({
       ...createUserInput,
-      password: hashedPassword,
-      registration_number: usersCount + 1,
-    });
-    return await createdUser.save();
+      password: await hash(createUserInput.password),
+      registration_number: (await this.getUsersCount()) + 1,
+    }).save();
   }
 
   async getUsersCount(): Promise<number> {
@@ -32,27 +29,22 @@ export class UserService {
     return await this.userModal.findById(userId);
   }
   async findOneByField(value: string, field: keyof User): Promise<UserDocument | null> {
-    const findBy: { [key in keyof User]?: string } = {};
-    findBy[`${field}`] = value;
-    const user = this.userModal.findOne(findBy);
-
-    return await user.exec();
+    return await this.userModal.findOne(toMongoRecord(value, field)).exec();
   }
 
-  // @UseFilters(MongoExceptionFilter)
   async update(userId: string, updateUserInput: UpdateUserInput): Promise<UserDocument | null> {
-    const toUpdate = this.translateAliases({
-      ...updateUserInput,
-    });
-
-    const updated = await this.userModal
-      .findByIdAndUpdate(userId, toUpdate, {
-        useFindAndModify: false,
-        new: true,
-      })
+    return await this.userModal
+      .findByIdAndUpdate(
+        userId,
+        this.translateAliases({
+          ...updateUserInput,
+        }),
+        {
+          useFindAndModify: false,
+          new: true,
+        },
+      )
       .exec();
-
-    return updated;
   }
 
   translateAliases(input: Partial<UserType>): UserDocument {

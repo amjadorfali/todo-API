@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, NestModule, Logger } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
 import { join } from 'path';
@@ -13,7 +13,6 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TodoModule } from './todo/todo.module';
 import { AuthModule } from './auth/auth.module';
-import { PluginDefinition } from 'apollo-server-core';
 
 const getMongoUrl = (configService: ConfigService) => {
   const urlStart = configService.get('MONGO_URL_START');

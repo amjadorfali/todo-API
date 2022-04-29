@@ -1,36 +1,44 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { UseFilters } from '@nestjs/common';
+
 import { TodoService } from './todo.service';
 import { Todo } from './entities/todo.entity';
-import { CreateTodoInput } from './dto/create-todo.input';
-import { UpdateTodoInput } from './dto/update-todo.input';
 import { CurrentUser } from 'src/auth/decorators/current-user-decorater';
 import { AuthenticatedUser } from 'src/auth/auth.interfaces';
+import { AllExceptionsFilter, MongoExceptionFilter } from 'src/handlers/exceptions';
+import { CreateTodoInput, FindPaginatedTodosInput, UpdateTodoInput } from './dto';
 
+@UseFilters(MongoExceptionFilter, AllExceptionsFilter)
 @Resolver(() => Todo)
 export class TodoResolver {
   constructor(private readonly todoService: TodoService) {}
+
+  @Query(() => [Todo], { name: 'fetchTodos' })
+  findAll(@CurrentUser() user: AuthenticatedUser, @Args('paginationInput') paginationInput: FindPaginatedTodosInput) {
+    return this.todoService.findAll(user.id, paginationInput.page, paginationInput.limit);
+  }
 
   @Mutation(() => Todo, { name: 'addTodo' })
   create(@Args('createTodoInput') createTodoInput: CreateTodoInput, @CurrentUser() user: AuthenticatedUser) {
     return this.todoService.create(createTodoInput, user.id);
   }
 
-  @Query(() => [Todo], { name: 'fetchTodos' })
-  findAll(@CurrentUser() user: AuthenticatedUser) {
-    return this.todoService.findAll(user.id);
-  }
-
   @Mutation(() => Todo, { name: 'updateTodo' })
   update(@Args('updateTodoInput') updateTodoInput: UpdateTodoInput) {
-    return this.todoService.update(updateTodoInput);
+    return this.todoService.updateByField(updateTodoInput);
   }
 
-  @Mutation(() => [Todo], { name: 'removeTodos', nullable: true })
-  remove(@Args('ids', { type: () => [String] }) ids: string[]) {
-    const removedTodos: Promise<Partial<Todo> | null>[] = [];
-    for (const id of ids) {
-      removedTodos.push(this.todoService.remove(id));
-    }
-    return removedTodos;
-  }
+  // @Mutation(() => String, { name: 'removeTodos', nullable: true })
+  // async remove(@Args('ids', { type: () => [String] }) ids: string[]) {
+  //   for (const id of ids) {
+  //     await this.todoService.remove(id);
+  //   }
+  //   return 'Okay';
+  // }
+
+  // @Mutation(() => String, { name: 'removeAllTodos', nullable: true })
+  // async batchRemove() {
+  //   await this.todoService.deleteAll();
+  //   return 'Okay';
+  // }
 }
