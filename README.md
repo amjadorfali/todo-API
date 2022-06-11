@@ -40,11 +40,17 @@ yarn
 
 ## Running the app :running_woman:
 
+<div style="text-align:start;">
+
 #### run in development
 
 ```bash
 yarn start
 ```
+
+</div>
+
+<div style="text-align:start;">
 
 #### run in watch mode
 
@@ -52,11 +58,17 @@ yarn start
 yarn start:dev
 ```
 
+</div>
+
+<div style="text-align:start;">
+
 #### run in production
 
 ```bash
 yarn start:prod
 ```
+
+</div>
 
 <hr>
 
@@ -72,23 +84,35 @@ Due to that, you need to run `yarn gen-gql-queries` in order to get a list of au
 
 ## Tests :hammer_and_wrench:
 
+<div style="text-align:start;">
+
 #### Unit
 
 ```bash
 yarn test
 ```
 
+</div>
+
+<div style="text-align:start;">
+
 #### E2E
 
 ```bash
-yarn test:e2e
+ yarn test:e2e
 ```
+
+</div>
+
+<div style="text-align:start;">
 
 #### Coverage
 
 ```bash
 yarn test:cov
 ```
+
+</div>
 
 <hr>
 
