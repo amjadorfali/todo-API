@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { ObjectId } from 'mongodb';
 import { Model } from 'mongoose';
 
 import { UpdateTodoInput, CreateTodoInput } from './dto';
@@ -26,6 +27,10 @@ export class TodoService {
       .exec();
   }
 
+  async findById(id: string): Promise<TodoDocument | null> {
+    return await this.todoModel.findById(id).exec();
+  }
+
   async updateByField(toUpdate: UpdateTodoInput): Promise<TodoDocument | null> {
     const { todoId, ...newValues } = toUpdate;
     const aliases = this.translateAliases({
@@ -38,8 +43,8 @@ export class TodoService {
     return await this.todoModel.findByIdAndDelete(id).exec();
   }
 
-  async deleteAll(): Promise<string> {
-    await this.todoModel.deleteMany().exec();
+  async deleteAllForUser(userId: string): Promise<string> {
+    await this.todoModel.deleteMany({ user: userId }).exec();
     return '';
   }
 

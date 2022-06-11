@@ -20,8 +20,8 @@ const getMongoUrl = (configService: ConfigService) => {
   const urlUserName = configService.get('MONGO_USER_NAME');
   const urlUserPassword = configService.get('MONGO_USER_PASSWORD');
   const urlClusterName = configService.get('NODE_ENV');
-
-  return `${urlStart}${urlUserName}:${urlUserPassword}@${urlClusterName}${urlEnd}`;
+  const toReturn = `${urlStart}${urlUserName}:${urlUserPassword}@${urlClusterName}${urlEnd}`;
+  return toReturn;
 };
 
 const setUpDB = async (configService: ConfigService): Promise<MongooseModuleOptions> => {

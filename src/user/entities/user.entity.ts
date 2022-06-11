@@ -18,9 +18,6 @@ export class UserEntity {
   email!: string;
 
   @Field({ nullable: false })
-  password!: string;
-
-  @Field({ nullable: false })
   registrationDate!: Date;
 
   @Field({ nullable: false })

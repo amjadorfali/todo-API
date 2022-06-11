@@ -53,8 +53,9 @@ type LoginResponse {
 
 type Mutation {
   addTodo(createTodoInput: CreateTodoInput!): Todo!
+  removeFood(id: String!): String
   signIn(user: LoginInput!): LoginResponse!
-  signUp(createUserInput: CreateUserInput!): UserEntity!
+  signUp(createUserInput: CreateUserInput!): LoginResponse!
   updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
   updateUserDetails(updateUserInput: UpdateUserInput!): UserEntity!
 }
@@ -102,7 +103,6 @@ type UserEntity {
   firstName: String!
   id: String!
   lastName: String
-  password: String!
   registrationDate: DateTime!
   registrationNumber: Float!
   todos(paginationInput: FindPaginatedTodosInput!): [Todo!]!

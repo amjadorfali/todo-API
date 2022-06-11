@@ -6,5 +6,5 @@ export class CreateTodoInput {
   action!: string;
 
   @Field({ nullable: true })
-  category?: string;
+  category!: string;
 }

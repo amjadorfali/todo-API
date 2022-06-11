@@ -9,10 +9,12 @@ async function bootstrap() {
 
   await app.listen(port);
   Logger.log(`🚀 Server running on PORT : ${port}`, 'Bootstrap');
-
+  console.debug('🔥 Nest Js Server ready to roll 🔥 ');
   if (module.hot) {
     module.hot.accept();
-    module.hot.dispose(() => app.close());
+    module.hot.dispose(() => {
+      app.close();
+    });
   }
 }
 bootstrap();

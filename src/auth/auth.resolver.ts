@@ -6,7 +6,9 @@ import { UserEntity } from 'src/user/entities/user.entity';
 import { UserDocument } from 'src/user/user.schema';
 import { AuthenticatedUser } from './auth.interfaces';
 import { Public } from './decorators/public-routes.decorator';
-
+import { UseFilters } from '@nestjs/common';
+import { AllExceptionsFilter, MongoExceptionFilter } from 'src/handlers/exceptions';
+@UseFilters(MongoExceptionFilter, AllExceptionsFilter)
 @Resolver()
 export class AuthResolver {
   constructor(private authService: AuthService) {}

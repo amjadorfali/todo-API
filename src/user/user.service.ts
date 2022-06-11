@@ -3,11 +3,11 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { CreateUserInput } from './dto/create-user.input';
-import { UpdateUserInput } from './dto/update-user.input';
-import { UserType } from './dto/user';
+import { UserType } from './dto/user.input';
 import { User, UserDocument } from './user.schema';
 import { hash } from 'src/hashing/hash';
 import { toMongoRecord } from 'src/helpers/mongo';
+import { UpdateUserInput } from './dto/update-user.input';
 
 @Injectable()
 export class UserService {
@@ -33,6 +33,7 @@ export class UserService {
   }
 
   async update(userId: string, updateUserInput: UpdateUserInput): Promise<UserDocument | null> {
+    if (updateUserInput.password) updateUserInput.password = await hash(updateUserInput.password);
     return await this.userModal
       .findByIdAndUpdate(
         userId,

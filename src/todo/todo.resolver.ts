@@ -1,5 +1,5 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { UseFilters } from '@nestjs/common';
+import { NotFoundException, UseFilters } from '@nestjs/common';
 
 import { TodoService } from './todo.service';
 import { Todo } from './entities/todo.entity';
@@ -24,10 +24,22 @@ export class TodoResolver {
   }
 
   @Mutation(() => Todo, { name: 'updateTodo' })
-  update(@Args('updateTodoInput') updateTodoInput: UpdateTodoInput) {
+  async update(@Args('updateTodoInput') updateTodoInput: UpdateTodoInput) {
+    try {
+      await this.todoService.findById(updateTodoInput.todoId);
+    } catch (e) {
+      console.log(JSON.stringify(e));
+      throw new NotFoundException();
+    }
     return this.todoService.updateByField(updateTodoInput);
   }
 
+  @Mutation(() => String, { name: 'removeFood', nullable: true })
+  async remove(@Args('id') id: string) {
+    if (!(await this.todoService.findById(id))) throw new NotFoundException();
+    await this.todoService.remove(id);
+    return 'Okay';
+  }
   // @Mutation(() => String, { name: 'removeTodos', nullable: true })
   // async remove(@Args('ids', { type: () => [String] }) ids: string[]) {
   //   for (const id of ids) {
