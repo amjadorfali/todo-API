@@ -1,0 +1,8 @@
+query fetchTodos($paginationInput: FindPaginatedTodosInput!){
+    fetchTodos(paginationInput: $paginationInput){
+        action
+        category
+        id
+        isDone
+    }
+}

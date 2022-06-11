@@ -1,0 +1,8 @@
+mutation updateTodo($updateTodoInput: UpdateTodoInput!){
+    updateTodo(updateTodoInput: $updateTodoInput){
+        action
+        category
+        id
+        isDone
+    }
+}

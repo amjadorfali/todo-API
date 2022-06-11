@@ -1,0 +1,5 @@
+mutation signUp($createUserInput: CreateUserInput!){
+    signUp(createUserInput: $createUserInput){
+        accessToken
+    }
+}

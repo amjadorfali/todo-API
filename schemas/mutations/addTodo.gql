@@ -1,0 +1,8 @@
+mutation addTodo($createTodoInput: CreateTodoInput!){
+    addTodo(createTodoInput: $createTodoInput){
+        action
+        category
+        id
+        isDone
+    }
+}
