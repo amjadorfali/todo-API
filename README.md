@@ -1,7 +1,3 @@
-```bash
-$ yarn start
-```
-
 <div align='center'>
 <p>
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="200" alt="Nest Logo" /></a>
@@ -37,26 +33,29 @@ DB integration (MongoDB) :card_file_box:
 ## Installation :firecracker:
 
 ```bash
-$ yarn
+yarn
 ```
 
 <hr>
 
 ## Running the app :running_woman:
 
-```bash
-# development
-$ yarn start
-```
+#### run in development
 
 ```bash
-# watch mode
-$ yarn start:dev
+yarn start
 ```
 
+#### run in watch mode
+
 ```bash
-# production mode
-$ yarn start:prod
+yarn start:dev
+```
+
+#### run in production
+
+```bash
+yarn start:prod
 ```
 
 <hr>
@@ -71,17 +70,24 @@ Due to that, you need to run `yarn gen-gql-queries` in order to get a list of au
 
 <hr>
 
-## Test :hammer_and_wrench:
+## Tests :hammer_and_wrench:
+
+#### Unit
 
 ```bash
-# unit tests
-$ yarn test
+yarn test
+```
 
-# e2e tests
-$ yarn test:e2e
+#### E2E
 
-# test coverage
-$ yarn test:cov
+```bash
+yarn test:e2e
+```
+
+#### Coverage
+
+```bash
+yarn test:cov
 ```
 
 <hr>
