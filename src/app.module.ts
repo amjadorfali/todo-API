@@ -46,6 +46,7 @@ const graphqlConfig: ApolloDriverConfig = {
   debug: true,
   sortSchema: true,
   driver: ApolloDriver,
+  introspection: true,
   context: ({ req }) => ({ ...req }),
 };
 @Module({
