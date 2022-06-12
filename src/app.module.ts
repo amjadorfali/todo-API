@@ -19,7 +19,7 @@ const getMongoUrl = (configService: ConfigService) => {
   const urlEnd = configService.get('MONGO_URL_END');
   const urlUserName = configService.get('MONGO_USER_NAME');
   const urlUserPassword = configService.get('MONGO_USER_PASSWORD');
-  const urlClusterName = configService.get('NODE_ENV');
+  const urlClusterName = configService.get('CLUSTER_NAME');
   const toReturn = `${urlStart}${urlUserName}:${urlUserPassword}@${urlClusterName}${urlEnd}`;
   return toReturn;
 };
