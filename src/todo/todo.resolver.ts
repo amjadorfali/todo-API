@@ -34,7 +34,7 @@ export class TodoResolver {
     return this.todoService.updateByField(updateTodoInput);
   }
 
-  @Mutation(() => String, { name: 'removeFood', nullable: true })
+  @Mutation(() => String, { name: 'removeTodo', nullable: true })
   async remove(@Args('id') id: string) {
     if (!(await this.todoService.findById(id))) throw new NotFoundException();
     await this.todoService.remove(id);

@@ -53,7 +53,7 @@ type LoginResponse {
 
 type Mutation {
   addTodo(createTodoInput: CreateTodoInput!): Todo!
-  removeFood(id: String!): String
+  removeTodo(id: String!): String
   signIn(user: LoginInput!): LoginResponse!
   signUp(createUserInput: CreateUserInput!): LoginResponse!
   updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
