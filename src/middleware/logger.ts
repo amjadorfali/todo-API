@@ -9,7 +9,7 @@ export class LoggerMiddleware implements NestMiddleware {
     const { password, ...varsToLog } = lodashGet(req, 'body.variables', {});
     const query = lodashGet(req, 'body.query', '');
 
-    if (!req.body.operationName && (!lodashIsEmpty(query) || !lodashIsEmpty(varsToLog))) {
+    if (!!req.body.operationName && (!lodashIsEmpty(query) || !lodashIsEmpty(varsToLog))) {
       console.log(`Requesting : ${query.replace(hidePassword, 'hiddenPassword')} \n vars ${JSON.stringify(varsToLog)}`);
     }
     next();
