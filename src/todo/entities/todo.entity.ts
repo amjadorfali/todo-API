@@ -8,7 +8,6 @@ export class Todo {
   @Field({ nullable: false })
   action!: string;
 
-  //TODO : ADD Default Values ??
   @Field({ nullable: false })
   category!: string;
 

@@ -5,7 +5,7 @@ import { UserService } from 'src/user/user.service';
 import { LoginInputDTO } from './dtos';
 import { UserDocument } from 'src/user/user.schema';
 import { AuthenticatedUser, JwtPayload } from './auth.interfaces';
-import { compare } from 'src/hashing/hash';
+import { compare } from 'src/handlers/hashing/hash';
 
 @Injectable()
 export class AuthService {

@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 import { CreateUserInput } from './dto/create-user.input';
 import { UserType } from './dto/user.input';
 import { User, UserDocument } from './user.schema';
-import { hash } from 'src/hashing/hash';
+import { hash } from 'src/handlers/hashing/hash';
 import { toMongoRecord } from 'src/helpers/mongo';
 import { UpdateUserInput } from './dto/update-user.input';
 
