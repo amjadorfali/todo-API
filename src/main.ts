@@ -9,9 +9,6 @@ const port = process.env.PORT || 1000;
 bootstrap();
 
 async function bootstrap() {
-  console.log(process.env.JWT_HASH_SECRET);
-  //FIXME:  REMOVE SECRET
-  if (!process.env.JWT_HASH_SECRET) throw Error('NO SECRET FOUND');
   const app = await setupApp();
 
   log();
